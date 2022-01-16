@@ -1,0 +1,32 @@
+import pygame
+import sys
+pygame.init()
+
+size = (512, 512)
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption("game for Tinkoff")
+scr_w = scr_h = 40
+margin = 3
+color_alife = (0, 210, 90)
+color_dead = (0, 28, 0)
+mas = [[0] * 12 for i in range(12)]
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit(0)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x_m, y_m = pygame.mouse.get_pos()
+            column = x_m // (margin + scr_w)
+            row = y_m // (margin + scr_h)
+            mas[row][column] = 1
+    for line in range(12):
+        y = line * scr_h + line * margin
+        for col in range(12):
+            if mas[line][col] == 1:
+                color = color_alife
+            else:
+                color = color_dead
+            x = col * scr_w + col * margin
+            pygame.draw.rect(screen, color, (x, y, scr_w, scr_h))
+        pygame.display.update()
